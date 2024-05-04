@@ -785,8 +785,8 @@ added: v0.7.0
 * `worker` {cluster.Worker}
 
 After forking a new worker, the worker should respond with an online message.
-When the primary receives an online message it will emit this event.
-The difference between `'fork'` and `'online'` is that fork is emitted when the
+When a primary receives an online message it will emit this event.
+The difference between `'fork'` and `'online'` is that fork is emitted when a
 primary forks a worker, and `'online'` is emitted when the worker is running.
 
 ```js
@@ -817,13 +817,13 @@ If accuracy is important, use `cluster.settings`.
 added: v0.7.7
 -->
 
-* `callback` {Function} Called when all workers are disconnected and handles are
+* `callback` {Function} Is called when all workers are disconnected and handles are
   closed.
 
 Calls `.disconnect()` on each worker in `cluster.workers`.
 
 When they are disconnected all internal handles will be closed, allowing the
-primary process to die gracefully if no other event is waiting.
+primary process to die gracefully if no other event is awaiting.
 
 The method takes an optional callback argument which will be called when
 finished.
@@ -836,10 +836,10 @@ This can only be called from the primary process.
 added: v0.6.0
 -->
 
-* `env` {Object} Key/value pairs to add to worker process environment.
+* `env` {Object} Key/value pairs to add to the worker process environment.
 * Returns: {cluster.Worker}
 
-Spawn a new worker process.
+Spawns a new worker process.
 
 This can only be called from the primary process.
 
@@ -922,24 +922,24 @@ changes:
 * {Object}
   * `execArgv` {string\[]} List of string arguments passed to the Node.js
     executable. **Default:** `process.execArgv`.
-  * `exec` {string} File path to worker file. **Default:** `process.argv[1]`.
-  * `args` {string\[]} String arguments passed to worker.
+  * `exec` {string} File path to the worker file. **Default:** `process.argv[1]`.
+  * `args` {string\[]} String arguments passed to the worker.
     **Default:** `process.argv.slice(2)`.
   * `cwd` {string} Current working directory of the worker process. **Default:**
-    `undefined` (inherits from parent process).
+    `undefined` (inherits from the parent process).
   * `serialization` {string} Specify the kind of serialization used for sending
-    messages between processes. Possible values are `'json'` and `'advanced'`.
+    messages between the processes. Possible values are `'json'` and `'advanced'`.
     See [Advanced serialization for `child_process`][] for more details.
     **Default:** `false`.
   * `silent` {boolean} Whether or not to send output to parent's stdio.
     **Default:** `false`.
-  * `stdio` {Array} Configures the stdio of forked processes. Because the
+  * `stdio` {Array} Configures the stdio of the forked processes. Because the
     cluster module relies on IPC to function, this configuration must contain an
     `'ipc'` entry. When this option is provided, it overrides `silent`. See
     [`child_process.spawn()`][]'s [`stdio`][].
   * `uid` {number} Sets the user identity of the process. (See setuid(2).)
   * `gid` {number} Sets the group identity of the process. (See setgid(2).)
-  * `inspectPort` {number|Function} Sets inspector port of worker.
+  * `inspectPort` {number|Function} Sets an inspector port of worker.
     This can be a number, or a function that takes no arguments and returns a
     number. By default each worker gets its own port, incremented from the
     primary's `process.debugPort`.
@@ -978,7 +978,7 @@ added: v16.0.0
 the settings will be present in `cluster.settings`.
 
 Any settings changes only affect future calls to [`.fork()`][] and have no
-effect on workers that are already running.
+effect on workers already running.
 
 The only attribute of a worker that cannot be set via `.setupPrimary()` is
 the `env` passed to [`.fork()`][].
@@ -1038,7 +1038,7 @@ if (cluster.isPrimary) {
   cluster.fork();
   cluster.fork();
 } else if (cluster.isWorker) {
-  console.log(`I am worker #${cluster.worker.id}`);
+  console.log(`I am a worker #${cluster.worker.id}`);
 }
 ```
 
@@ -1050,7 +1050,7 @@ if (cluster.isPrimary) {
   cluster.fork();
   cluster.fork();
 } else if (cluster.isWorker) {
-  console.log(`I am worker #${cluster.worker.id}`);
+  console.log(`I am a worker #${cluster.worker.id}`);
 }
 ```
 
@@ -1062,7 +1062,7 @@ added: v0.7.0
 
 * {Object}
 
-A hash that stores the active worker objects, keyed by `id` field. This makes it
+A hash that stores the active worker objects, keyed by the `id` field. This makes it
 easy to loop through all the workers. It is only available in the primary
 process.
 
